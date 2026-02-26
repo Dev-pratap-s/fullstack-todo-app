@@ -11,7 +11,7 @@ export default function TodoList() {
 
   const fetchTodos = async () => {
     try {
-      const res = await API.get("/v1/getTodo");
+      const res = await API.get("/v1/getTodo", { withCredentials: true });
       setTodos(res.data.data);
     } catch (err) {
       console.error(err);
@@ -20,7 +20,7 @@ export default function TodoList() {
 
   const deleteTodo = async (id) => {
     try {
-      await API.delete(`/v1/deletetodo/${id}`);
+      await API.delete(`/v1/deletetodo/${id}`, { withCredentials: true });
       setTodos(todos.filter(todo => todo._id !== id));
     } catch (err) {
       console.error(err);
@@ -29,7 +29,7 @@ export default function TodoList() {
 
   const logout = async () => {
     try {
-      await API.get("/auth/logout");
+      await API.get("/auth/logout", { withCredentials: true });
       setUser(null);
       navigate("/login");
     } catch (err) {
