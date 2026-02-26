@@ -6,9 +6,13 @@ require("dotenv").config();
 
 // Enable CORS for all routes
 const cors = require("cors");
+// ✅ CORS setup for deployed frontend
 app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true
+  origin: [
+    "https://fullstack-todo-app-11.onrender.com", // deployed frontend
+    "http://localhost:3000" // local frontend
+  ],
+  credentials: true // cookies/session ke liye
 }));
 // Middleware to parse JSON request body
 app.use(express.json());
