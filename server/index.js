@@ -7,12 +7,21 @@ require("dotenv").config();
 // Enable CORS for all routes
 const cors = require("cors");
 // ✅ CORS setup for deployed frontend
+const allowedOrigins = [
+  "https://fullstack-todo-app-11.onrender.com",
+  "http://localhost:3000"
+];
+
 app.use(cors({
-  origin: [
-    "https://fullstack-todo-app-11.onrender.com", // deployed frontend
-    "http://localhost:3000" // local frontend
-  ],
-  credentials: true // cookies/session ke liye
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // Postman ya same-origin request ke liye
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true); // origin allowed
+    } else {
+      callback(new Error("Not allowed by CORS")); // origin blocked
+    }
+  },
+  credentials: true
 }));
 // Middleware to parse JSON request body
 app.use(express.json());
