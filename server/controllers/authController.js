@@ -67,9 +67,12 @@ exports.login = async (req, res) => {
     );
 
     // send cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-    });
+   res.cookie("token", token, {
+  httpOnly: true,                                // JS access nahi
+  secure: process.env.NODE_ENV === "production", // deployed site ke liye HTTPS
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // cross-origin ke liye none
+  maxAge: 24 * 60 * 60 * 1000,                  // 1 day
+});
 
     res.status(200).json({
       success: true,
@@ -86,12 +89,11 @@ exports.login = async (req, res) => {
 exports.logout = (req, res) => {
   try {
     // Clear the JWT cookie
-    res.clearCookie("token", {
-      httpOnly: true,
-      sameSite: "lax", // ya 'none' agar cross-origin frontend
-      secure: process.env.NODE_ENV === "production", 
-    });
-
+   res.clearCookie("token", {
+  httpOnly: true,
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  secure: process.env.NODE_ENV === "production",
+});
     res.status(200).json({
       success: true,
       message: "Logged out successfully",
