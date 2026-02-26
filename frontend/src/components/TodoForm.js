@@ -13,7 +13,7 @@ export default function TodoForm({ fetchTodos }) {
     if (id) {
       const fetchTodo = async () => {
         try {
-          const res = await API.get(`/v1/getTodo/${id}`);
+          const res = await API.get(`/v1/getTodo/${id}`, { withCredentials: true });
           setTitle(res.data.data.title);
           setDescription(res.data.data.description);
         } catch (err) {
@@ -24,24 +24,24 @@ export default function TodoForm({ fetchTodos }) {
       fetchTodo();
     }
   }, [id, navigate]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      if (id) {
-        await API.put(`/v1/updateTodo/${id}`, { title, description });
-      } else {
-        await API.post("/v1/createTodo", { title, description });
-      }
-
-      setTitle("");
-      setDescription("");
-      if (fetchTodos) fetchTodos();
-      navigate("/");
-    } catch (err) {
-      alert("Error saving todo");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    if (id) {
+      await API.put(`/v1/updateTodo/${id}`, { title, description }, { withCredentials: true });
+    } else {
+      await API.post("/v1/createTodo", { title, description }, { withCredentials: true });
     }
-  };
+
+    setTitle("");
+    setDescription("");
+    if (fetchTodos) fetchTodos();
+    navigate("/");
+  } catch (err) {
+    console.error(err.response || err);
+    alert(err.response?.data?.message || "Error saving todo");
+  }
+};
 
   return (
     <div className="todo-page">
