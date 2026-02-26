@@ -1,0 +1,23 @@
+//create server.................
+// const express= require("express")
+// const app= express();
+// const dbConnect = require('./config/database')
+// dbConnect()
+
+// app.listen(3000,()=>{
+//     console.log("server now start")
+// })
+
+
+///innstal nodemon .......................
+//  step -1 
+//   npm i nodemon
+
+//  step-2
+// "scripts": {
+//               "start": "node index.js",
+//                "dev":"nodemon index.js"
+//              },
+
+// step-3  
+//    npm run dev
