@@ -11,7 +11,7 @@ export default function TodoList() {
 
   const fetchTodos = async () => {
     try {
-      const res = await API.get("/v1/getTodo", { withCredentials: true });
+      const res = await API.get("/v1/getTodo");
       setTodos(res.data.data);
     } catch (err) {
       console.error(err);
