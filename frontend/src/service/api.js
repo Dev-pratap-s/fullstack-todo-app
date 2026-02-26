@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:3001/api",
+  baseURL: "https://fullstack-todo-app-nnft.onrender.com/api", // live backend
   withCredentials: true,
 });
 
